@@ -1,0 +1,19 @@
+{
+    "include": [
+        "src/**/*.ts"
+    ],
+    "exclude": [
+        "lib",
+        "node_modules",
+        "src/**/*.test.ts"
+    ],
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "declaration": true,
+        "module": "ES2020",
+        "outDir": "./lib",
+        "rootDir": "./src",
+        "strict": true,
+        "target": "ES2020",
+    }
+}

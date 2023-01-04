@@ -1,6 +1,17 @@
 {
   "name": "voyage-island",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Oleksii Novikov (hello@novikraft.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.4"
+  }
 }
