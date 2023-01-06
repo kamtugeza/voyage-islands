@@ -2,7 +2,7 @@ import { Island, VoyageIsland, VoyageIslandFactory } from "./island";
 
 export interface VoyageLighthouse {
   createIsland: VoyageIslandFactory;
-  discovery(el: unknown): VoyageIsland;
+  discovery(el: unknown): Promise<VoyageIsland>;
 }
 
 export interface VoyageLighthouseProps {
@@ -16,13 +16,16 @@ export class Lighthouse implements VoyageLighthouse {
     this.createIsland = createIsland;
   }
 
-  discovery(el: unknown): VoyageIsland {
+  async discovery(el: unknown): Promise<VoyageIsland> {
     this.validateIsland(el);
-    const children = Array.from(el.querySelectorAll('[data-island]'))
-      .filter((childEl): childEl is HTMLElement => childEl instanceof HTMLElement)
-      .filter(childEl => childEl.parentElement?.closest('[data-island]') === el)
-      .map(childEl => this.discovery(childEl));
+    const children = await this.getNested(el);
     return this.createIsland({ el, children });
+  }
+
+  private async getNested(parentEl: HTMLElement): Promise<VoyageIsland[]> {
+    const islands = Array.from(parentEl.querySelectorAll('[data-island]'))
+      .filter(el => el.parentElement?.closest('[data-island]') === parentEl);
+    return Promise.all(islands.map(island => this.discovery(island)));
   }
 
   private validateIsland(el: unknown): asserts el is HTMLElement {
