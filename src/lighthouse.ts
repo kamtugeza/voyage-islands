@@ -17,18 +17,18 @@ export class Lighthouse implements VoyageLighthouse {
   }
 
   async discovery(el: unknown): Promise<VoyageIsland> {
-    this.validateIsland(el);
-    const children = await this.getNested(el);
+    this.validateEl(el);
+    const children = await this.getChildren(el);
     return this.createIsland({ el, children });
   }
 
-  private async getNested(parentEl: HTMLElement): Promise<VoyageIsland[]> {
+  private async getChildren(parentEl: HTMLElement): Promise<VoyageIsland[]> {
     const islands = Array.from(parentEl.querySelectorAll('[data-island]'))
       .filter(el => el.parentElement?.closest('[data-island]') === parentEl);
     return Promise.all(islands.map(island => this.discovery(island)));
   }
 
-  private validateIsland(el: unknown): asserts el is HTMLElement {
+  private validateEl(el: unknown): asserts el is HTMLElement {
     const isEl = el && el instanceof HTMLElement;
     if (!isEl) throw new TypeError('the `el` is not an instance of HTMLElement');
   }
