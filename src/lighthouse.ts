@@ -32,4 +32,8 @@ export class Lighthouse implements VoyageLighthouse {
     const isEl = el && el instanceof HTMLElement;
     if (!isEl) throw new TypeError('the `el` is not an instance of HTMLElement');
   }
+
+  static of(props?: VoyageLighthouseProps): VoyageLighthouse {
+    return new Lighthouse(props);
+  }
 }
