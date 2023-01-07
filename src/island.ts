@@ -1,6 +1,7 @@
 export interface VoyageIsland {
   el: HTMLElement;
   children: VoyageIsland[];
+  mount(): Promise<void>;
 }
 
 export interface VoyageIslandProps {
@@ -17,6 +18,10 @@ export class Island implements VoyageIsland {
   constructor({ children, el }: VoyageIslandProps) {
     this.children = children;
     this.el = el;
+  }
+
+  async mount(): Promise<void> {
+    console.log('mounted', this.el);
   }
 
   static of(props: VoyageIslandProps) {
