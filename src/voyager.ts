@@ -1,18 +1,18 @@
 import { Island, VoyageIsland, VoyageIslandFactory } from "./island";
 
-export interface VoyageLighthouse {
+export interface VoyageVoyager {
   createIsland: VoyageIslandFactory;
   discovery(el: unknown): Promise<VoyageIsland>;
 }
 
-export interface VoyageLighthouseProps {
+export interface VoyageVoyagerProps {
   createIsland?: VoyageIslandFactory;
 }
 
-export class Lighthouse implements VoyageLighthouse {
+export class Voyager implements VoyageVoyager {
   createIsland: VoyageIslandFactory;
 
-  constructor({ createIsland = Island.of }: VoyageLighthouseProps = { }) {
+  constructor({ createIsland = Island.of }: VoyageVoyagerProps = { }) {
     this.createIsland = createIsland;
   }
 
@@ -33,7 +33,7 @@ export class Lighthouse implements VoyageLighthouse {
     if (!isEl) throw new TypeError('the `el` is not an instance of HTMLElement');
   }
 
-  static of(props?: VoyageLighthouseProps): VoyageLighthouse {
-    return new Lighthouse(props);
+  static of(props?: VoyageVoyagerProps): VoyageVoyager {
+    return new Voyager(props);
   }
 }
