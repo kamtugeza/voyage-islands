@@ -22,21 +22,17 @@ export class Voyager implements VoyageVoyager {
   }
 
   async discovery(el: unknown): Promise<VoyageIsland> {
-    const island = await this.getIsland(el);
+    const island = this.getIsland(el);
     await this.settler.land(island);
     return island;
   }
 
-  private async getChildren(parentEl: HTMLElement): Promise<VoyageIsland[]> {
-    const islands = Array.from(parentEl.querySelectorAll('[data-island]'))
-      .filter(el => el.parentElement?.closest('[data-island]') === parentEl);
-    return Promise.all(islands.map(island => this.getIsland(island)));
-  }
-
-  private async getIsland(el: unknown): Promise<VoyageIsland> {
+  private getIsland(el: unknown): VoyageIsland {
     this.validateEl(el);
-    const children = await this.getChildren(el);
-    return this.createIsland({ children, el })
+    const children = Array.from(el.querySelectorAll('[data-island]'))
+      .filter(childEl => childEl.parentElement?.closest('[data-island]') === el)
+      .map(childEl => this.getIsland(childEl));
+    return this.createIsland({ children, el });
   }
 
   private validateEl(el: unknown): asserts el is HTMLElement {
