@@ -2,8 +2,6 @@ import { Island, VoyageIsland, VoyageIslandFactory } from "./island";
 import { Settler, VoyageSettler } from "./settler";
 
 export interface VoyageVoyager {
-  createIsland: VoyageIslandFactory;
-  settler: VoyageSettler;
   discovery(el: unknown): Promise<VoyageIsland>;
 }
 
@@ -13,8 +11,8 @@ export interface VoyageVoyagerProps {
 }
 
 export class Voyager implements VoyageVoyager {
-  createIsland: VoyageIslandFactory;
-  settler: VoyageSettler;
+  private createIsland: VoyageIslandFactory;
+  private settler: VoyageSettler;
 
   constructor({ createIsland = Island.of, settler = Settler.of() }: VoyageVoyagerProps = { }) {
     this.createIsland = createIsland;
