@@ -6,15 +6,22 @@ export interface VoyageVoyager {
 }
 
 export interface VoyageVoyagerProps {
+  selector?: string;
   createIsland?: VoyageIslandFactory;
   settler?: VoyageSettler;
 }
 
 export class Voyager implements VoyageVoyager {
+  private selector: string;
   private createIsland: VoyageIslandFactory;
   private settler: VoyageSettler;
 
-  constructor({ createIsland = Island.of, settler = Settler.of() }: VoyageVoyagerProps = { }) {
+  constructor({
+    selector = '[data-island]',
+    createIsland = Island.of,
+    settler = Settler.of()
+  }: VoyageVoyagerProps = { }) {
+    this.selector = selector;
     this.createIsland = createIsland;
     this.settler = settler;
   }
@@ -27,8 +34,8 @@ export class Voyager implements VoyageVoyager {
 
   private getIsland(el: unknown): VoyageIsland {
     this.validateEl(el);
-    const children = Array.from(el.querySelectorAll('[data-island]'))
-      .filter(childEl => childEl.parentElement?.closest('[data-island]') === el)
+    const children = Array.from(el.querySelectorAll(this.selector))
+      .filter(childEl => childEl.parentElement?.closest(this.selector) === el)
       .map(childEl => this.getIsland(childEl));
     return this.createIsland({ children, el });
   }
