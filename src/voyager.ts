@@ -1,4 +1,7 @@
+import { type VoyageComponentConstructor } from "./component";
 import { Island, VoyageIsland, VoyageIslandFactory } from "./island";
+import { type VoyageLoader } from "./loader";
+import { ScriptLoader } from "./script-loader";
 import { Settler, VoyageSettler } from "./settler";
 
 export interface VoyageVoyager {
@@ -8,21 +11,25 @@ export interface VoyageVoyager {
 export interface VoyageVoyagerProps {
   selector?: string;
   createIsland?: VoyageIslandFactory;
+  scriptLoader?: VoyageLoader<VoyageComponentConstructor>;
   settler?: VoyageSettler;
 }
 
 export class Voyager implements VoyageVoyager {
   private selector: string;
   private createIsland: VoyageIslandFactory;
+  private scriptLoader: VoyageLoader<VoyageComponentConstructor>;
   private settler: VoyageSettler;
 
   constructor({
     selector = '[data-island]',
     createIsland = Island.of,
+    scriptLoader = ScriptLoader.of({ pathPrefix: '/dist' }),
     settler = Settler.of()
   }: VoyageVoyagerProps = { }) {
     this.selector = selector;
     this.createIsland = createIsland;
+    this.scriptLoader = scriptLoader;
     this.settler = settler;
   }
 
@@ -37,7 +44,11 @@ export class Voyager implements VoyageVoyager {
     const children = Array.from(el.querySelectorAll(this.selector))
       .filter(childEl => childEl.parentElement?.closest(this.selector) === el)
       .map(childEl => this.getIsland(childEl));
-    return this.createIsland({ children, el });
+    return this.createIsland({
+      children,
+      el,
+      scriptLoader: this.scriptLoader,
+    });
   }
 
   private validateEl(el: unknown): asserts el is HTMLElement {
