@@ -1,11 +1,18 @@
+import type { VoyageStatus } from './status';
+import { VStatus } from './status';
+
+type VoyageNodeStatuses = 'INITIALIZED' | 'PRELOADED' | 'MOUNTED';
+
 export interface VoyageNode {
   children: VoyageNode[];
   el: HTMLElement;
+  status: VoyageStatus<VoyageNodeStatuses>;
 }
 
 export class VNode implements VoyageNode {
   children: VoyageNode[];
   el: HTMLElement;
+  status: VoyageStatus<VoyageNodeStatuses> = new VStatus('INITIALIZED');
 
   constructor(el: unknown) {
     this.validate(el);
