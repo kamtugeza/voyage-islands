@@ -1,23 +1,35 @@
-import type { VoyageNode} from './node';
-import { VNode } from './node';
 
-export interface VoyageVoyager {
-  nodes: VoyageNode;
-  launch(): VoyageVoyager;
+import type { VoyageIslandConstructor } from './island';
+import { StyleLoader, VoyageLoader } from './loader';
+import { ScriptLoader } from './loader';
+import { VoyageNode } from './node';
+
+interface VoyagerConfig {
+  el: Element | null;
+  dir: string;
 }
 
-export class VVoyager implements VoyageVoyager {
-  nodes: VoyageNode;
+export class Voyager {
+  private createNode = VoyageNode.of;
+  private scriptLoader: VoyageLoader<VoyageIslandConstructor> = new ScriptLoader(this.config.dir);
+  private styleLoader: VoyageLoader<void> = new StyleLoader(this.config.dir);
 
-  constructor(el: unknown) {
-    this.nodes = new VNode(el);
+  constructor(private config: VoyagerConfig) {}
+
+  async launch(): Promise<void> {
+    await this.hydrate(this.config.el);
+    // TODO: add delayed hydration
   }
 
-  launch(): VoyageVoyager {
-    return this;
+  private async hydrate(el: unknown): Promise<void> {
+    const node = this.createNode(el);
+    await this.styleLoader.load(node);
+    const Island = await this.scriptLoader.load(node);
+    await new Island(node.el).mount();
+    for await (const childEl of node.getChildren()) this.hydrate(childEl);
   }
 
-  static of(el: unknown): VVoyager {
-    return new VVoyager(el);
+  static of(config: VoyagerConfig): Voyager {
+    return new Voyager(config);
   }
 }

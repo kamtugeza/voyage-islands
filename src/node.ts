@@ -1,33 +1,24 @@
-import type { VoyageStatus } from './status';
-import { VStatus } from './status';
-
-type VoyageNodeStatuses = 'INITIALIZED' | 'PRELOADED' | 'MOUNTED';
-
-export interface VoyageNode {
-  children: VoyageNode[];
+export class VoyageNode {
   el: HTMLElement;
-  status: VoyageStatus<VoyageNodeStatuses>;
-}
-
-export class VNode implements VoyageNode {
-  children: VoyageNode[];
-  el: HTMLElement;
-  status: VoyageStatus<VoyageNodeStatuses> = new VStatus('INITIALIZED');
 
   constructor(el: unknown) {
-    this.validate(el);
-    this.children = this.queryChildren(el);
+    const isHtmlEl = el && el instanceof HTMLElement;
+    if (!isHtmlEl) throw new TypeError('the `el` is not an instance of `HTMLElement`');
     this.el = el;
   }
 
-  private queryChildren(el: HTMLElement): VoyageNode[] {
-    return Array.from(el.querySelectorAll('[data-island]'))
-      .filter(childEl => childEl.parentElement?.closest('[data-island]') === el)
-      .map(childEl => new VNode(childEl));
+  getChildren(): Element[] {
+    return Array.from(this.el.querySelectorAll('[data-island]'))
+      .filter(childEl => childEl.parentElement?.closest('[data-island]') === this.el)
   }
 
-  private validate(el: unknown): asserts el is HTMLElement {
-    const isEl = el && el instanceof HTMLElement;
-    if (!isEl) throw new TypeError('the `el` is not an instance of HTMLElement');
+  getName(): string {
+    const name = this.el.getAttribute('data-island');
+    if (!name) throw new Error('the `el` doesn\'t have the island\'s name attribute');
+    return name;
+  }
+
+  static of(el: unknown) {
+    return new VoyageNode(el);
   }
 }
