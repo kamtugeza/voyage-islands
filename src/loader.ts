@@ -16,6 +16,9 @@ export class ScriptLoader extends VoyageLoader<VoyageIslandConstructor> {
 
 export class StyleLoader extends VoyageLoader<void> {
   async load(node: VoyageNode): Promise<void> {
-    
+    const link = document.createElement('link');
+    link.href = `${this.dir}/${node.getName()}.css`;
+    link.rel = 'stylesheet';
+    document.head.append(link);
   }
 }

@@ -13,12 +13,13 @@ export class Voyager {
   private createNode = VoyageNode.of;
   private scriptLoader: VoyageLoader<VoyageIslandConstructor> = new ScriptLoader(this.config.dir);
   private styleLoader: VoyageLoader<void> = new StyleLoader(this.config.dir);
+  // TODO: add delayed hydration (e.g. when the component becomes visible)
+  // TODO: create and observer for the component in/out of the viewport
 
   constructor(private config: VoyagerConfig) {}
 
   async launch(): Promise<void> {
     await this.hydrate(this.config.el);
-    // TODO: add delayed hydration
   }
 
   private async hydrate(el: unknown): Promise<void> {
