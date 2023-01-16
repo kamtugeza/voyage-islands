@@ -5,9 +5,15 @@
   "author": "Oleksii Novikov (hello@novikraft.com)",
   "license": "MIT",
   "scripts": {
+    "build": "node build",
     "start": "lite-server"
   },
   "devDependencies": {
-    "lite-server": "^2.6.1"
+    "autoprefixer": "^10.4.13",
+    "esbuild": "^0.16.13",
+    "esbuild-sass-plugin": "^2.4.5",
+    "glob": "^8.1.0",
+    "lite-server": "^2.6.1",
+    "postcss": "^8.4.21"
   }
 }
