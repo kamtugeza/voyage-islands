@@ -1,0 +1,37 @@
+@import "./atoms/control";
+
+body {
+  margin: 0;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+strong {
+  .headline & {
+    color: #c00;
+    display: block;
+    font-size: 48px;
+    font-weight: 700;
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+}
+
+.headline {
+  color: #191919;
+  font-size: 36px;
+  font-weight: 400;
+  margin-bottom: 0;
+  margin-top: 0;
+  text-align: center;
+}
+
+.island:not(first-child) {
+  margin-top: 48px;
+}
+
+.page {
+  padding: 72px 64px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 600px;
+}

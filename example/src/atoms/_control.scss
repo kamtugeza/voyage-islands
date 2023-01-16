@@ -1,0 +1,44 @@
+.control {
+  background-color: #c00;
+  border: 1px solid #c00;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .1106rem;
+  line-height: 1;
+  min-height: 50px;
+  min-width: 120px;
+  padding: 17px 30px;
+  outline: 0;
+  text-transform: uppercase;
+  transition: background-color .3s linear, border-color .3s linear, color .3s linear;
+
+  &:focus-visible,
+  &:hover {
+    background-color: #c20000;
+    border-color: #c20000;
+
+    body.-animationAdded & {
+      transition: background-color .1s linear, border-color .1s linear, color .1s linear;
+    }
+  }
+
+  &[disabled] {
+    background-color: rgba(25,25,25,.08);
+    border: 1px solid rgba(0,0,0,.08);
+    box-sizing: border-box;
+    color: #979ea4;
+    cursor: not-allowed;
+
+    body.-animationAdded & {
+      transition: background-color .1s linear, border-color .1s linear, color .1s linear;
+    }
+  }
+
+  body.-animationAdded & {
+    transition: background-color .3s linear, border-color .3s linear, color .3s linear;
+  }
+}

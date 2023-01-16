@@ -1,0 +1,56 @@
+$fieldFontSize: 16px;
+
+.field {
+  display: block;
+  padding-top: 32px;
+  position: relative;
+}
+
+.field__input {
+  background-color: transparent;
+  border-color: transparent transparent #dee2e6 transparent;
+  border-style: solid;
+  border-width: 1px 0;
+  display: block;
+  color: #191919;
+  font-size: $fieldFontSize;
+  font-weight: 700;
+  line-height: $fieldFontSize;
+  height: 50px;
+  outline: 0;
+  padding: 16px 0;
+  width: 100%;
+  
+  &:focus-visible {
+    border-bottom-color: #c20000;
+    
+    body.-animationAdded & {
+      transition: border-color .1s linear;
+    }
+  }
+  
+  body.-animationAdded & {
+    transition: border-color .1s linear;
+  }
+}
+
+.field__label {
+  font-size: 14px;
+  color: #6c757d;
+  left: 0;
+  line-height: $fieldFontSize;
+  position: absolute;
+  top: 12px;
+  
+  .field__input:not(.-filled):not(:focus) ~ & {
+    transform: translateY(37px);
+
+    body.-animationAdded & {
+      transition: transform .3s linear;
+    }
+  }
+  
+  body.-animationAdded & {
+    transition: transform .1s linear;
+  }
+}

@@ -1,0 +1,17 @@
+@import "./molecules/field";
+
+.toDoForm {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0;
+  margin-top: 48px;
+}
+
+.toDoForm__cell.-control {
+  margin-left: 24px;
+}
+
+.toDoForm__cell.-field {
+  flex: 1 1 auto;
+}
