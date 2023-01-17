@@ -2,4 +2,6 @@ export interface VoyageIsland {
   mount(): Promise<void>;
 }
 
-export type VoyageIslandConstructor = new (el: HTMLElement) => VoyageIsland;
+export interface VoyageIslandConstructor<T> {
+  new (el: HTMLElement, context: T): VoyageIsland;
+}

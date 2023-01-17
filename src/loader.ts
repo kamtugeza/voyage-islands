@@ -7,8 +7,8 @@ export abstract class VoyageLoader<T> {
   abstract load(node: VoyageNode): Promise<T>;
 }
 
-export class ScriptLoader extends VoyageLoader<VoyageIslandConstructor> {
-  async load(node: VoyageNode): Promise<VoyageIslandConstructor> {
+export class ScriptLoader<T> extends VoyageLoader<VoyageIslandConstructor<T>> {
+  async load(node: VoyageNode): Promise<VoyageIslandConstructor<T>> {
     const { default: island } = await import(`${this.dir}/${node.getName()}.js`);
     return island;
   }
