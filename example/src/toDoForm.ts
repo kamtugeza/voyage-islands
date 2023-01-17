@@ -1,11 +1,24 @@
 import type { VoyageIsland } from '../../src/island';
+import { VoyageToDoState } from './states/todoState';
+import type { VoyageContext } from './types/context';
 
 export default class ToDoForm implements VoyageIsland {
-  constructor(private el: HTMLElement) {}
+  private field: HTMLInputElement | null;
+  private todos: VoyageToDoState;
+
+  constructor(private el: HTMLElement, context: VoyageContext) {
+    this.todos = context.todos;
+  }
 
   async mount(): Promise<void> {
-    this.el.addEventListener('submit', this.onSubmit);
-    this.getField()?.addEventListener('keyup', this.onChange);
+    this.el.addEventListener('submit', this.onSubmit.bind(this));
+    this.field = this.getField();
+    this.field?.addEventListener('keyup', this.onChange.bind(this));
+  }
+
+  private clearField() {
+    if (!this.field) return;
+    this.field.value = '';
   }
 
   private getField(): HTMLInputElement | null {
@@ -20,9 +33,10 @@ export default class ToDoForm implements VoyageIsland {
   }
 
   private onSubmit(event: SubmitEvent) {
-    const form = event.target;
-    const isForm = form instanceof HTMLFormElement;
-    if (!isForm) return;
     event.preventDefault();
+    const task = this.field?.value;
+    if (!task) return;
+    this.todos.add(task);
+    this.clearField();
   }
 }
