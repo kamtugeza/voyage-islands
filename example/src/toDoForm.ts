@@ -3,7 +3,8 @@ import { VoyageToDoState } from './states/todoState';
 import type { VoyageContext } from './types/context';
 
 export default class ToDoForm implements VoyageIsland {
-  private field: HTMLInputElement | null;
+  private control: HTMLButtonElement | null = null;
+  private field: HTMLInputElement | null = null;
   private todos: VoyageToDoState;
 
   constructor(private el: HTMLElement, context: VoyageContext) {
@@ -12,6 +13,8 @@ export default class ToDoForm implements VoyageIsland {
 
   async mount(): Promise<void> {
     this.el.addEventListener('submit', this.onSubmit.bind(this));
+    this.control = this.getControl();
+    this.toggleControl(true);
     this.field = this.getField();
     this.field?.addEventListener('keyup', this.onChange.bind(this));
   }
@@ -19,6 +22,11 @@ export default class ToDoForm implements VoyageIsland {
   private clearField() {
     if (!this.field) return;
     this.field.value = '';
+  }
+
+  private getControl(): HTMLButtonElement | null {
+    const control = this.el.querySelector('.js-toDoControl');
+    return control instanceof HTMLButtonElement ? control : null;
   }
 
   private getField(): HTMLInputElement | null {
@@ -30,6 +38,7 @@ export default class ToDoForm implements VoyageIsland {
     const isField = target instanceof HTMLInputElement;
     if (!isField) return;
     target.classList.toggle('-filled', !!target.value);
+    this.toggleControl(!target.value);
   }
 
   private onSubmit(event: SubmitEvent) {
@@ -38,5 +47,9 @@ export default class ToDoForm implements VoyageIsland {
     if (!task) return;
     this.todos.add(task);
     this.clearField();
+  }
+
+  private toggleControl(isDisabled: boolean = true): void {
+    this.control?.toggleAttribute('disabled', isDisabled);
   }
 }
