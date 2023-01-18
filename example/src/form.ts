@@ -22,6 +22,7 @@ export default class Form implements VoyageIsland {
   private clearField() {
     if (!this.field) return;
     this.field.value = '';
+    this.toggleControl();
   }
 
   private getControl(): HTMLButtonElement | null {
