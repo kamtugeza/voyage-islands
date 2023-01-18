@@ -1,0 +1,19 @@
+strong {
+  .headline & {
+    color: #c00;
+    display: block;
+    font-size: 48px;
+    font-weight: 700;
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+}
+
+.headline {
+  color: #191919;
+  font-size: 36px;
+  font-weight: 400;
+  margin-bottom: 0;
+  margin-top: 0;
+  text-align: center;
+}

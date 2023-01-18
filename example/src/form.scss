@@ -1,6 +1,6 @@
-@import "./molecules/field";
+@import './molecules/field';
 
-.toDoForm {
+.form {
   align-items: flex-end;
   display: flex;
   flex-direction: row;
@@ -8,10 +8,10 @@
   margin-top: 48px;
 }
 
-.toDoForm__cell.-control {
+.form__cell.-control {
   margin-left: 24px;
 }
 
-.toDoForm__cell.-field {
+.form__cell.-field {
   flex: 1 1 auto;
 }

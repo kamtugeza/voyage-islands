@@ -1,0 +1,16 @@
+strong {
+  .noTasks & {
+    color: #c00;
+  }
+}
+
+.noTasks {
+  font-size: 20px;
+  margin-top: 64px;
+  text-align: center;
+  text-transform: uppercase;
+
+  &[aria-hidden="true"] {
+    display: none;
+  }
+}

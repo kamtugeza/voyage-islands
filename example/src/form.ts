@@ -2,7 +2,7 @@ import type { VoyageIsland } from '../../src/island';
 import { VoyageToDoState } from './states/todoState';
 import type { VoyageContext } from './types/context';
 
-export default class ToDoForm implements VoyageIsland {
+export default class Form implements VoyageIsland {
   private control: HTMLButtonElement | null = null;
   private field: HTMLInputElement | null = null;
   private todos: VoyageToDoState;
