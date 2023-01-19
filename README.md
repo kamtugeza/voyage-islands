@@ -24,7 +24,7 @@ Each *island* has it's own JS and CSS files. We download those files in runtime 
 // lighthouse.ts
 import type { VoyageIsland } from '../../src/island'
 
-export default class Lighthouse implements VoyageIsland<> {
+export default class Lighthouse implements VoyageIsland {
 
   constructor(
     /** An element that contains the `[data-island]` attribute. The anchor! */
